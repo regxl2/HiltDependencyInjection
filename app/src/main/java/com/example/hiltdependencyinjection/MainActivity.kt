@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        userRepository.log()
+        userRepository.saveUser("regxl", "regxl@gmail.com")
         setContent {
             HiltDependencyInjectionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

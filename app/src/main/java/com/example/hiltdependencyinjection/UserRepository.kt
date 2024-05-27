@@ -1,10 +1,18 @@
 package com.example.hiltdependencyinjection
 
-import javax.inject.Inject
+import android.util.Log
 
-// Constructor Injection
-class UserRepository @Inject constructor(private val logApiService: LogApiService){
-    fun log(){
-        logApiService.log("Hello World, my name is regxl")
+interface UserRepository{
+    fun saveUser(name: String, email: String)
+}
+
+class SQLRepository: UserRepository{
+    override fun saveUser(name: String, email: String) {
+        Log.d(TAG, "SQlRepository: saved the user with name: $name, email: $email")
+    }
+}
+class FirebaseRepository: UserRepository{
+    override fun saveUser(name: String, email: String) {
+        Log.d(TAG, "FirebaseRepository: saved the user with name: $name, email: $email")
     }
 }
