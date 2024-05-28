@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.hiltdependencyinjection.screens.MainScreen
 import com.example.hiltdependencyinjection.ui.theme.HiltDependencyInjectionTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,56 +25,17 @@ const val TAG = "HiltLearn"
 // the activity with @AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    // Field Injection
-
-    @SqlQualifier
-    @Inject
-    lateinit var sqlRepository: UserRepository
-
-    @Named("firebase")
-    @Inject
-    lateinit var firebaseRepository: UserRepository
-
-    @Inject
-    lateinit var logApiService1: LogApiService
-
-    @Inject
-    lateinit var logApiService2: LogApiService
-    // Since, we made LogApiService ActivityScoped then, only one object will
-    // be created at Activity level, on debugging the logApiService1 and logApiService2
-    // both will have same hashcode and reference.
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        sqlRepository.saveUser("regxl", "regxl@gmail.com")
-        firebaseRepository.saveUser("regxl", "regxl@gmail.com")
         setContent {
             HiltDependencyInjectionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    MainScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    HiltDependencyInjectionTheme {
-        Greeting("Android")
     }
 }
