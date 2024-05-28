@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.hiltdependencyinjection.ui.theme.HiltDependencyInjectionTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import javax.inject.Named
 
 const val TAG = "HiltLearn"
 
@@ -25,13 +26,20 @@ const val TAG = "HiltLearn"
 class MainActivity : ComponentActivity() {
 
     // Field Injection
+
+    @SqlQualifier
     @Inject
-    lateinit var userRepository: UserRepository
+    lateinit var sqlRepository: UserRepository
+
+    @Named("firebase")
+    @Inject
+    lateinit var firebaseRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        userRepository.saveUser("regxl", "regxl@gmail.com")
+        sqlRepository.saveUser("regxl", "regxl@gmail.com")
+        firebaseRepository.saveUser("regxl", "regxl@gmail.com")
         setContent {
             HiltDependencyInjectionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

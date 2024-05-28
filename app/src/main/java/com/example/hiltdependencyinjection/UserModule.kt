@@ -1,9 +1,11 @@
 package com.example.hiltdependencyinjection
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import javax.inject.Named
 
 // When we will use the Module: -
 // Let suppose for DI, we need to provide the object of the 3rd party library object
@@ -23,8 +25,19 @@ import dagger.hilt.android.components.ActivityComponent
 @InstallIn(ActivityComponent::class)
 @Module
 class UserModule {
+    @Named("firebase")
     @Provides
-    fun provideUserRepository():UserRepository{
+    fun provideFirebaseRepository():UserRepository{
         return FirebaseRepository()
+    }
+
+//    @Binds
+//    using @Provides and @Binds will create this error: A @Module may not contain both non-static and abstract binding methods
+//    abstract fun provideSQLRepository(sqlRepository: SQLRepository):UserRepository
+
+    @SqlQualifier
+    @Provides
+    fun provideSQLRepository(): UserRepository{
+        return SQLRepository()
     }
 }
