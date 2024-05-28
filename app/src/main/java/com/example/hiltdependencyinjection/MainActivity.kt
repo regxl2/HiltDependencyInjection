@@ -35,6 +35,15 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var firebaseRepository: UserRepository
 
+    @Inject
+    lateinit var logApiService1: LogApiService
+
+    @Inject
+    lateinit var logApiService2: LogApiService
+    // Since, we made LogApiService ActivityScoped then, only one object will
+    // be created at Activity level, on debugging the logApiService1 and logApiService2
+    // both will have same hashcode and reference.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

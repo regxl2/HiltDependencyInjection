@@ -5,7 +5,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Named
+import javax.inject.Singleton
 
 // When we will use the Module: -
 // Let suppose for DI, we need to provide the object of the 3rd party library object
@@ -37,6 +39,11 @@ class UserModule {
 
     @SqlQualifier
     @Provides
+//    @FragmentScoped
+//    @Singleton
+//    There is no point of using @FragmentScoped and @Singleton annotation and it will give
+//    error: [Dagger/IncompatiblyScopedBindings]
+//    Since, we have used ActivityComponent we already made it Activity Scoped
     fun provideSQLRepository(): UserRepository{
         return SQLRepository()
     }
